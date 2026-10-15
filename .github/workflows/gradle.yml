@@ -24,17 +24,21 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
+    - name: Create Gradle Wrapper
+      run: |
+        cd sixclientui
+        gradle wrapper
+
     - name: Grant execute permission for gradlew
       run: chmod -R 777 ./sixclientui
-      continue-on-error: true
 
     - name: Build Mod File
       run: |
-        cd sixclient26
-        gradle build -x test --no-daemon
+        cd sixclientui
+        ./gradlew build -x test --no-daemon
 
     - name: Upload Mod Jar
       uses: actions/upload-artifact@v4
       with:
-        name: SixClientModd-JAR
+        name: SixClientUI-JAR
         path: sixclientui/build/libs/*.jar
